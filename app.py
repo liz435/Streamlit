@@ -29,7 +29,7 @@ tier7 = most_fire_string[60:69]
 tier8 = most_fire_string[70:]
 
 st.write(tier1)
-
+st.write(tier2)
 # NYC
 m = folium.Map(location=[40.7228, -73.8000], zoom_start=12, width=1280, height=720)
 
@@ -40,6 +40,7 @@ police_precincts_popups = []
 for feature in geojson_data['features']:
     popup = feature['properties']['precinct']
     police_precincts_popups.append(popup)
+
 
 # st.write(police_precincts_popups)
 
