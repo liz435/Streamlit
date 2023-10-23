@@ -12,12 +12,12 @@ df = df.dropna()
 # Read the CSV data
 
 fire = df['policeprecinct'].value_counts()
-most_fire = dict(fire)
+fire = fire.to_dict()
 # Get the keys of the dictionary
 
-most_fire_keys = sorted(most_fire, key=most_fire.get, reverse=True)
-
+most_fire_keys = list(fire.keys())
 most_fire_string = str(most_fire_keys)
+st.write(most_fire_string)
 
 tier1 = most_fire_string[:9]
 tier2 = most_fire_string[10:19]
