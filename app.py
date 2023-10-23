@@ -13,23 +13,19 @@ df = df.dropna()
 
 fire = df['policeprecinct'].value_counts()
 fire = fire.to_dict()
-# Get the keys of the dictionary
 
 most_fire_keys = list(fire.keys())
 most_fire_string = str(most_fire_keys)
-st.write(most_fire_string)
 
-tier1 = most_fire_string[:9]
-tier2 = most_fire_string[10:19]
-tier3 = most_fire_string[20:29]
-tier4 = most_fire_string[30:39]
-tier5 = most_fire_string[40:49]
-tier6 = most_fire_string[50:59]
-tier7 = most_fire_string[60:69]
-tier8 = most_fire_string[70:]
+tier1 = str(most_fire_keys[0:9])
+tier2 = str(most_fire_keys[10:19])
+tier3 = str(most_fire_keys[20:29])
+tier4 = str(most_fire_keys[30:39])
+tier5 = str(most_fire_keys[40:49])
+tier6 = str(most_fire_keys[50:59])
+tier7 = str(most_fire_keys[60:69])
+tier8 = str(most_fire_keys[70:])
 
-st.write(tier1)
-st.write(tier2)
 # NYC
 m = folium.Map(location=[40.7228, -73.8000], zoom_start=12, width=1280, height=720)
 
@@ -46,41 +42,125 @@ for feature in geojson_data['features']:
 
 def field_type_colour(feature):
     if feature['properties']['precinct'] in tier1:
-        return 'darkred'
+        return '#7d0800'
     if feature['properties']['precinct'] in tier2:
-        return 'red'
+        return '#8f1c14'
     if feature['properties']['precinct'] in tier3:
-        return 'orange'
+        return '#a63229'
     if feature['properties']['precinct'] in tier4:
-        return 'yellow'
+        return '#ad4b44'
     elif feature['properties']['precinct'] in tier5:
-        return 'green'
+        return '#bf6660'
     elif feature['properties']['precinct'] in tier6:
-        return 'grey'
+        return '#cf817c'
     elif feature['properties']['precinct'] in tier7:
-        return 'black'
+        return '#de9c97'
     elif feature['properties']['precinct'] in tier8:
-        return 'beige'
+        return '#e6b9b5'
+    else:
+        return '#ebd7d5'
     
 # Add the GeoJSON data to the map
 folium.GeoJson(geojson_data, name='Police Precincts',
                tooltip=folium.GeoJsonTooltip(fields=('precinct', 'shape_area', 'shape_leng')),
                style_function= lambda feature: {'fillColor':field_type_colour(feature), 
-                                                'fillOpacity':0.5, 'weight':1, 'color':'black', 'dashArray':'5, 5'}
+                                                'fillOpacity':0.7, 'weight':1, 'color':'black', 'dashArray':'5, 5'}
                                                 ).add_to(m)
 
 
-# Display the map
-st.write('Police Precincts')
-st_data = st_folium(m, width=1280)
-
-
-# Add CSS
+# Display
+st.write('Reported Fire Frequency by Police Precinct')
 st.markdown("""
-<style>
-body {
-    color: black;
-    background-color: #111;
-}
-</style>
+<div>
+<button style = 'background-color:#7d0800;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+            <button style = 'background-color:#8f1c14;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+
+</button>
+            <button style = 'background-color:#a63229;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+            
+</button>
+            <button style = 'background-color:#ad4b44;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+        
+</button>
+            <button style = 'background-color:#bf6660;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+            
+</button>
+            <button style = 'background-color:#cf817c;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+            
+</button>
+            <button style = 'background-color:#de9c97;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+            
+</button>
+            <button style = 'background-color:#e6b9b5;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+            
+</button>
+            <button style = 'background-color:#ebd7d5;
+                 text-decoration: none;
+                 display:inline-block; 
+                 border:none;
+                 width:20px;
+                 height:20px;
+                '>
+</button>
+</div>
+            
+            
     """, unsafe_allow_html=True)
+
+st_data = st_folium(m, width=1280)
